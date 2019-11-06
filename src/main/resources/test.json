@@ -1,0 +1,15 @@
+{
+  "studentId": "12345678",
+  "name": "张三哦",
+  "sex": 1,
+  "birthDate": "1997-07",
+  "admissionYear": "2014",
+  "graduationYear": "2018",
+  "major": "信息安全",
+  "hometown": "浙江宁波",
+  "currentAddress": "北京市海淀区",
+  "company": "阿里云",
+  "phone": "12345678901",
+  "mail": "12345678901@163.com",
+  "blogAddress": "https://www.iteye.com/blog/user/rednaxelafx"
+}

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.celitea.zeus.dao.mapper.AllianceMemberMapper">
+  <resultMap id="BaseResultMap" type="cn.celitea.zeus.dao.entity.AllianceMember">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="birth_date" jdbcType="VARCHAR" property="birthDate" />
+    <result column="admission_year" jdbcType="VARCHAR" property="admissionYear" />
+    <result column="graduation_year" jdbcType="VARCHAR" property="graduationYear" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="hometown" jdbcType="VARCHAR" property="hometown" />
+    <result column="current_address" jdbcType="VARCHAR" property="currentAddress" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
+    <result column="blog_address" jdbcType="VARCHAR" property="blogAddress" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, student_id, name, sex, birth_date, admission_year, graduation_year, major, hometown,
+    current_address, company, phone, mail, blog_address, create_time, update_time
+  </sql>
+  <insert id="insertSelective" parameterType="cn.celitea.zeus.dao.entity.AllianceMember">
+    insert into alliance_member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="birthDate != null">
+        birth_date,
+      </if>
+      <if test="admissionYear != null">
+        admission_year,
+      </if>
+      <if test="graduationYear != null">
+        graduation_year,
+      </if>
+      <if test="major != null">
+        major,
+      </if>
+      <if test="hometown != null">
+        hometown,
+      </if>
+      <if test="currentAddress != null">
+        current_address,
+      </if>
+      <if test="company != null">
+        company,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="mail != null">
+        mail,
+      </if>
+      <if test="blogAddress != null">
+        blog_address,
+      </if>
+        create_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studentId != null">
+        #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="birthDate != null">
+        #{birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionYear != null">
+        #{admissionYear,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationYear != null">
+        #{graduationYear,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="hometown != null">
+        #{hometown,jdbcType=VARCHAR},
+      </if>
+      <if test="currentAddress != null">
+        #{currentAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null">
+        #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="blogAddress != null">
+        #{blogAddress,jdbcType=VARCHAR},
+      </if>
+        now()
+    </trim>
+  </insert>
+
+  <select id="selectByStuId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from alliance_member
+    where student_id = #{studentId,jdbcType=VARCHAR}
+  </select>
+</mapper>
