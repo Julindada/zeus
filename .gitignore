@@ -3,5 +3,5 @@
 target/
 .DS_Store
 application.properties
-./running/*
-./log/*
+running/
+log/
