@@ -2,11 +2,11 @@
 
 # JVM
 JAVA_HOME=${JAVA_HOME:-/global/share/jdk1.8.0_191}
-JVM_MEMORY="-Xmx2g \
-  -Xms2g \
+JVM_MEMORY="-Xmx1g \
+  -Xms1g \
   -Xss1m \
   -XX:MetaspaceSize=1g \
-  -XX:MaxMetaspaceSize=2g"
+  -XX:MaxMetaspaceSize=1g"
 JVM_GC="-XX:+UseG1GC \
   -XX:MaxGCPauseMillis=200"
 JVM_JDWP="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address="
