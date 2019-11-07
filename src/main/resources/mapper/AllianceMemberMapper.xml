@@ -117,4 +117,12 @@
     from alliance_member
     where student_id = #{studentId,jdbcType=VARCHAR}
   </select>
+
+  <select id="listMembersByLastId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from alliance_member
+    where id &gt; #{lastId}
+    limit 0,#{len}
+  </select>
 </mapper>

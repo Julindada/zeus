@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by julin on 2019/11/5
  */
@@ -29,4 +31,13 @@ public class MemberService {
     public boolean verifyStuIdUnique(String stuId) {
         return allianceMemberMapper.selectByStuId(stuId) == null;
     }
+
+    public AllianceMember getMemberByStuId(String stuId) {
+        return allianceMemberMapper.selectByStuId(stuId);
+    }
+
+    public List<AllianceMember> listMembersByLastId(int lastId, int len) {
+        return allianceMemberMapper.listMembersByLastId(lastId, len);
+    }
+
 }

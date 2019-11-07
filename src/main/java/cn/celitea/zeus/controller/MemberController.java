@@ -12,7 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created by julin on 2019/10/31
@@ -43,4 +46,24 @@ public class MemberController {
         }else
             return JSONResult.fail(Status.REPEATED_STUID, null);
     }
+
+    @RequestMapping("/get")
+    public JSONObject get(@RequestParam String studentId) {
+        AllianceMember member = memberService.getMemberByStuId(studentId);
+            if (member == null)
+                return JSONResult.fail(Status.PARAM_ERROR, null);
+            else
+                return JSONResult.success(member);
+    }
+
+    @RequestMapping("/list")
+    public JSONObject list(@RequestParam(defaultValue = "0", required = false) int lastId,
+                           @RequestParam(defaultValue = "10", required = false) int len) {
+        List<AllianceMember> list = memberService.listMembersByLastId(lastId, len);
+        if (list == null)
+            return JSONResult.fail(Status.PARAM_ERROR, null);
+        else
+            return JSONResult.success(list);
+    }
+
 }
