@@ -9,28 +9,8 @@ JVM_MEMORY="-Xmx2g \
   -XX:MaxMetaspaceSize=2g"
 JVM_GC="-XX:+UseG1GC \
   -XX:MaxGCPauseMillis=200"
-JVM_GC_LOG="-XX:+PrintGCDetails \
-  -XX:+PrintGCDateStamps \
-  -XX:+PrintHeapAtGC \
-  -XX:+PrintGCApplicationStoppedTime \
-  -Xloggc:logs/gc.log"
-JVM_MISC="-XX:+HeapDumpOnOutOfMemoryError"
-JVM_PROPERTIES="-Djava.library.path=./nativelib"
 JVM_JDWP="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address="
-JVM_ARGS=${JVM_MEMORY}" "${JVM_GC}" "${JVM_GC_LOG}" "${JVM_MISC}
-
-function usage(){
-cat << EOF
-Usage:
-    http.sh <command> <service.jar> <profiles> [-foreground] [-debug <address>] [args...]
-The commands are:
-    start   start service
-    stop    stop service
-Examples
-    http.sh start service.jar dev -foreground -debug 22222
-    http.sh stop
-EOF
-}
+JVM_ARGS=${JVM_MEMORY}" "${JVM_GC}
 
 function check_process_is_running(){
     if [[ -f service.pid ]]; then
@@ -44,10 +24,6 @@ function check_process_is_running(){
 command=$1
 case ${command} in
     (start)
-        if [[ $# -lt 2 ]]; then
-            usage
-            exit 1
-        fi
         check_process_is_running
         if [[ $? -eq 0 ]]; then
             echo "Service[pid="`cat service.pid`"] already started, stop it first or delete service.pid"
@@ -59,37 +35,18 @@ case ${command} in
         fi
 
         EXEC_JAR=$2
-
-        FOREGROUND=0
-        DEBUG=0
-
         shift 3
-        while [[ $# > 0 ]]
-            do
-                case $1 in
-                    -foreground)
-                        FOREGROUND=1
-                        shift 1
-                        ;;
-                    -debug)
-                        DEBUG=1
-                        DEBUG_ADDRESS=$2
-                        shift 2
-                        ;;
-                    *)
-                        break
-                        ;;
-                esac
-            done
 
         # copy as *.running
-        RUNNING_JAR=${EXEC_JAR}.${PROFILES}.running
+        RUNNING_JAR=${EXEC_JAR}.running
         cp ${EXEC_JAR} ${RUNNING_JAR}
         chmod +x ${RUNNING_JAR}
 
         # jdwp
-        if [[ ${DEBUG} -eq 1 ]]; then
-          JVM_JDWP=${JVM_JDWP}${DEBUG_ADDRESS}
+        #jdwp端口号，0为默认不开启
+        DEBUG=1234
+        if [[ $DEBUG -ne 0 ]]; then
+          JVM_JDWP=${JVM_JDWP}${DEBUG}
           echo "Enable jdwp = "${JVM_JDWP}
           JVM_ARGS=${JVM_ARGS}" "${JVM_JDWP}
         fi
